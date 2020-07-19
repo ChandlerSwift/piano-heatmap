@@ -125,7 +125,6 @@
                 midiIn.push(input.value);
             }
 
-            displayDevices();
             for (const input of midiIn) {
                 input.addEventListener('midimessage', midiMessageReceived);
             }
@@ -160,6 +159,8 @@
                 document.getElementById(`key-${i}`).onclick = function() { alert(notes[i] + " presses") };
             }
         }
+
+        connect();
     </script>
 </body>
 
