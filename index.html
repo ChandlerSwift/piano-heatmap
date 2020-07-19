@@ -99,6 +99,7 @@
         <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" id="key-106" data-note-name="b-flat-7" width="15" height="50" x="1242.5" y="0" />
         <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" id="key-108" data-note-name="c-8" width="25" height="100" x="1275" y="0" />
     </svg>
+    <pre id="output"></pre>
 
     <script>
         let notes = new Array(109).fill(0);
@@ -151,6 +152,14 @@
             }
         }
 
+        function formatNoteName(name) {
+            if (name.includes("flat")) {
+                return `${name[0].toUpperCase()}&#9837; ${name[7]}:  `
+            } else {
+                return `${name[0].toUpperCase()} ${name[2]}:   `
+            }
+        }
+
         function updateKeyboardDisplay() {
             for (let i = 21; i < 109; i++) {
                 let relative_frequency = notes[i] / max_count;
@@ -158,6 +167,22 @@
                 document.getElementById(`key-${i}`).style.fill = `rgb(255, ${green_blue_color_value}, ${green_blue_color_value})`;
                 document.getElementById(`key-${i}`).onclick = function() { alert(notes[i] + " presses") };
             }
+
+            let counts = [];
+            for (let i = 21; i < 109; i++) {
+                counts.push({
+                    noteName: document.getElementById(`key-${i}`).dataset.noteName,
+                    count: notes[i]
+                });
+            }
+
+            counts.sort((a,b) => b.count - a.count);
+
+            let content = `TOTAL: ${notes.reduce((a,b)=>a+b)}\n`;
+            for (let count of counts) {
+                content += formatNoteName(count.noteName) + count.count + '\n';
+            }
+            document.getElementById('output').innerHTML = content;
         }
 
         connect();
