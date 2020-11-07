@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Heatmap v2</title>
+    <style>
+        div.controls {
+            margin-bottom: 10px;
+        }
+        div.controls * {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <a href="index.html">Home</a>
+        <a href="all-time-stats.html">All-time stats</a>
+    </div>
+    <template id="keyboard">
+        <svg version="1.1" baseProfile="full" width="1300" height="100" xmlns="http://www.w3.org/2000/svg">
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-21" data-note-name="a-0" width="25" height="100" x="0" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-23" data-note-name="b-0" width="25" height="100" x="25" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-22" data-note-name="b-flat-0" width="15" height="50" x="17.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-24" data-note-name="c-1" width="25" height="100" x="50" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-26" data-note-name="d-1" width="25" height="100" x="75" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-25" data-note-name="d-flat-1" width="15" height="50" x="67.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-28" data-note-name="e-1" width="25" height="100" x="100" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-27" data-note-name="e-flat-1" width="15" height="50" x="92.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-29" data-note-name="f-1" width="25" height="100" x="125" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-31" data-note-name="g-1" width="25" height="100" x="150" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-30" data-note-name="g-flat-1" width="15" height="50" x="142.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-33" data-note-name="a-1" width="25" height="100" x="175" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-32" data-note-name="a-flat-1" width="15" height="50" x="167.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-35" data-note-name="b-1" width="25" height="100" x="200" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-34" data-note-name="b-flat-1" width="15" height="50" x="192.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-36" data-note-name="c-2" width="25" height="100" x="225" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-38" data-note-name="d-2" width="25" height="100" x="250" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-37" data-note-name="d-flat-2" width="15" height="50" x="242.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-40" data-note-name="e-2" width="25" height="100" x="275" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-39" data-note-name="e-flat-2" width="15" height="50" x="267.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-41" data-note-name="f-2" width="25" height="100" x="300" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-43" data-note-name="g-2" width="25" height="100" x="325" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-42" data-note-name="g-flat-2" width="15" height="50" x="317.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-45" data-note-name="a-2" width="25" height="100" x="350" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-44" data-note-name="a-flat-2" width="15" height="50" x="342.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-47" data-note-name="b-2" width="25" height="100" x="375" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-46" data-note-name="b-flat-2" width="15" height="50" x="367.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-48" data-note-name="c-3" width="25" height="100" x="400" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-50" data-note-name="d-3" width="25" height="100" x="425" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-49" data-note-name="d-flat-3" width="15" height="50" x="417.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-52" data-note-name="e-3" width="25" height="100" x="450" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-51" data-note-name="e-flat-3" width="15" height="50" x="442.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-53" data-note-name="f-3" width="25" height="100" x="475" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-55" data-note-name="g-3" width="25" height="100" x="500" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-54" data-note-name="g-flat-3" width="15" height="50" x="492.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-57" data-note-name="a-3" width="25" height="100" x="525" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-56" data-note-name="a-flat-3" width="15" height="50" x="517.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-59" data-note-name="b-3" width="25" height="100" x="550" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-58" data-note-name="b-flat-3" width="15" height="50" x="542.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-60" data-note-name="c-4" width="25" height="100" x="575" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-62" data-note-name="d-4" width="25" height="100" x="600" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-61" data-note-name="d-flat-4" width="15" height="50" x="592.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-64" data-note-name="e-4" width="25" height="100" x="625" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-63" data-note-name="e-flat-4" width="15" height="50" x="617.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-65" data-note-name="f-4" width="25" height="100" x="650" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-67" data-note-name="g-4" width="25" height="100" x="675" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-66" data-note-name="g-flat-4" width="15" height="50" x="667.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-69" data-note-name="a-4" width="25" height="100" x="700" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-68" data-note-name="a-flat-4" width="15" height="50" x="692.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-71" data-note-name="b-4" width="25" height="100" x="725" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-70" data-note-name="b-flat-4" width="15" height="50" x="717.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-72" data-note-name="c-5" width="25" height="100" x="750" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-74" data-note-name="d-5" width="25" height="100" x="775" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-73" data-note-name="d-flat-5" width="15" height="50" x="767.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-76" data-note-name="e-5" width="25" height="100" x="800" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-75" data-note-name="e-flat-5" width="15" height="50" x="792.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-77" data-note-name="f-5" width="25" height="100" x="825" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-79" data-note-name="g-5" width="25" height="100" x="850" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-78" data-note-name="g-flat-5" width="15" height="50" x="842.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-81" data-note-name="a-5" width="25" height="100" x="875" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-80" data-note-name="a-flat-5" width="15" height="50" x="867.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-83" data-note-name="b-5" width="25" height="100" x="900" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-82" data-note-name="b-flat-5" width="15" height="50" x="892.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-84" data-note-name="c-6" width="25" height="100" x="925" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-86" data-note-name="d-6" width="25" height="100" x="950" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-85" data-note-name="d-flat-6" width="15" height="50" x="942.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-88" data-note-name="e-6" width="25" height="100" x="975" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-87" data-note-name="e-flat-6" width="15" height="50" x="967.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-89" data-note-name="f-6" width="25" height="100" x="1000" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-91" data-note-name="g-6" width="25" height="100" x="1025" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-90" data-note-name="g-flat-6" width="15" height="50" x="1017.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-93" data-note-name="a-6" width="25" height="100" x="1050" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-92" data-note-name="a-flat-6" width="15" height="50" x="1042.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-95" data-note-name="b-6" width="25" height="100" x="1075" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-94" data-note-name="b-flat-6" width="15" height="50" x="1067.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-96" data-note-name="c-7" width="25" height="100" x="1100" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-98" data-note-name="d-7" width="25" height="100" x="1125" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-97" data-note-name="d-flat-7" width="15" height="50" x="1117.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-100" data-note-name="e-7" width="25" height="100" x="1150" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-99" data-note-name="e-flat-7" width="15" height="50" x="1142.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-101" data-note-name="f-7" width="25" height="100" x="1175" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-103" data-note-name="g-7" width="25" height="100" x="1200" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-102" data-note-name="g-flat-7" width="15" height="50" x="1192.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-105" data-note-name="a-7" width="25" height="100" x="1225" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-104" data-note-name="a-flat-7" width="15" height="50" x="1217.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-107" data-note-name="b-7" width="25" height="100" x="1250" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-106" data-note-name="b-flat-7" width="15" height="50" x="1242.5" y="0" />
+            <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-108" data-note-name="c-8" width="25" height="100" x="1275" y="0" />
+        </svg>
+        <div class="summary"></div>
+        <details>
+            <summary>Show all counts</summary>
+            <pre class="output"></pre>
+        </details>
+        <hr>
+    </template>
+
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script>
+        let db = new Dexie("piano_heatmap_db");
+        db.version(1).stores({
+            sessions: '++id,date'
+        });
+
+
+        db.sessions.orderBy('date').reverse().toArray().then(function(sessions){
+            const keyboard = document.getElementById("keyboard");
+            for (let session of sessions) {
+                const newKeyboard = keyboard.content.cloneNode(true);
+                newKeyboard.id = `session-{session.id}`;
+                updateKeyboardDisplay(newKeyboard, session);
+                document.body.append(newKeyboard);
+            }
+        });
+
+        function formatNoteName(name) {
+            if (name.includes("flat")) {
+                return `${name[0].toUpperCase()}&#9837; ${name[7]}:  `
+            } else {
+                return `${name[0].toUpperCase()} ${name[2]}:   `
+            }
+        }
+
+        function updateKeyboardDisplay(keyboard, session) {
+            let title = new Date(session.date).toString();
+            if (session.description != "") {
+                title += ": " + session.description;
+            }
+            keyboard.prepend(title);
+            let notes = new Array(109).fill(0);
+            let max_count = 0;
+            for (let i = 0; i < 109; i++) {
+                notes[i] += session.notes[i];
+                if (notes[i] > max_count) {
+                    max_count = notes[i];
+                }
+            }
+            for (let i = 21; i < 109; i++) {
+                let relative_frequency = notes[i] / max_count;
+                let green_blue_color_value = 255 - 255 * relative_frequency;
+                keyboard.querySelector(`.key-${i}`).style.fill = `rgb(255, ${green_blue_color_value}, ${green_blue_color_value})`;
+                keyboard.querySelector(`.key-${i}`).onclick = function() { alert(notes[i] + " presses") };
+            }
+
+            let counts = [];
+            for (let i = 21; i < 109; i++) {
+                counts.push({
+                    noteName: keyboard.querySelector(`.key-${i}`).dataset.noteName,
+                    count: notes[i]
+                });
+            }
+
+            counts.sort((a,b) => b.count - a.count);
+            let total = notes.reduce((a,b)=>a+b);
+            let content = `TOTAL: ${total}\n`;
+            for (let count of counts) {
+                content += formatNoteName(count.noteName) + count.count + '\n';
+            }
+            keyboard.querySelector('.output').innerHTML = content;
+
+            let summary = `<b>Notes played</b>: ${total}<br><b>Top 5 notes</b>:<br>`;
+            for (let i = 0; i < 5; i++) {
+                if (counts[i].count > 0) {
+                    summary += formatNoteName(counts[i].noteName) + counts[i].count + '<br>';
+                }
+            }
+            keyboard.querySelector('.summary').innerHTML = summary;
+
+        }
+    </script>
+</body>
+
+</html>
