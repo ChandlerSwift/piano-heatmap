@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano Heatmap v2 | Home</title>
+    <title>Piano Heatmap v2 | All-time Stats</title>
     <style>
         div.controls {
             margin-bottom: 10px;
@@ -17,9 +17,7 @@
 
 <body>
     <div class="controls">
-        <button id="save-session-btn">Save Session</button>
-        <!--<a href="session-summary.html">Session Summary</a>-->
-        <a href="all-time-stats.html">All-time stats</a>
+        <a href="index.html">All-time stats</a>
     </div>
     <svg version="1.1" baseProfile="full" width="1300" height="100" xmlns="http://www.w3.org/2000/svg">
         <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" id="key-21" data-note-name="a-0" width="25" height="100" x="0" y="0" />
@@ -115,61 +113,26 @@
 
     <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
     <script>
-        let db; // for longer-term storage
+        let db = new Dexie("piano_heatmap_db");
+        db.version(1).stores({
+            sessions: '++id,date'
+        });
+
 
         let notes = new Array(109).fill(0);
-        let max_count = 1; // no division by 0 later!
-        let midiIn = [];
+        let max_count = 0;
 
-        function connect() {
-            if (!navigator.requestMIDIAccess) {
-                alert("Your browser does not support WebMIDI. Try a Chromium-based browser, or JazzSoft's Web MIDI API Extension for Firefox.");
-                return;
-            }
-            navigator.requestMIDIAccess()
-                .then(
-                    (midi) => {
-                        // React to device changes.
-                        midi.addEventListener('statechange', (event) => initDevices(event.target));
-                        initDevices(midi); // see the next section!
-                    },
-                    (err) => console.log('Something went wrong', err)
-                );
-        }
-        function initDevices(midi) {
-            midiIn = [];
-
-            // MIDI devices that send you data.
-            const inputs = midi.inputs.values();
-            for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-                midiIn.push(input.value);
-            }
-
-            for (const input of midiIn) {
-                input.addEventListener('midimessage', midiMessageReceived);
-            }
-        }
-
-        function midiMessageReceived(event) {
-            // MIDI commands we care about. See
-            // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
-            const NOTE_ON = 9;
-            const NOTE_OFF = 8;
-
-            const cmd = event.data[0] >> 4;
-            const pitch = event.data[1];
-            const velocity = (event.data.length > 2) ? event.data[2] : 1;
-
-            if (cmd === NOTE_ON && velocity > 0) {
-                console.log(`🎧 from ${event.srcElement.name} note off: pitch:${pitch}, velocity: {velocity}`);
-
-                notes[pitch] += 1;
-                if (notes[pitch] > max_count) {
-                    max_count = notes[pitch];
+        db.sessions.toArray().then(function(sessions){
+            for (let session of sessions) {
+                for (let i = 0; i < 109; i++) {
+                    notes[i] += session.notes[i];
+                    if (notes[i] > max_count) {
+                        max_count = notes[i];
+                    }
                 }
-                updateKeyboardDisplay();
             }
-        }
+            updateKeyboardDisplay();
+        });
 
         function formatNoteName(name) {
             if (name.includes("flat")) {
@@ -203,22 +166,6 @@
             }
             document.getElementById('output').innerHTML = content;
         }
-
-        document.getElementById("save-session-btn").addEventListener("click", function() {
-            if (db === undefined) { // Initialize the DB the first time
-                db = new Dexie("piano_heatmap_db");
-                db.version(1).stores({
-                    sessions: '++id,date'
-                });
-            }
-            db.sessions.put({
-                date: Date.now(),
-                notes: notes,
-                description: prompt("Description:")
-            });
-        });
-
-        connect();
     </script>
 </body>
 
