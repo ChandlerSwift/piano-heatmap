@@ -107,6 +107,10 @@
         let midiIn = [];
 
         function connect() {
+            if (!navigator.requestMIDIAccess) {
+                alert("Your browser does not support WebMIDI. Try a Chromium-based browser, or JazzSoft's Web MIDI API Extension for Firefox.");
+                return;
+            }
             navigator.requestMIDIAccess()
                 .then(
                     (midi) => {
