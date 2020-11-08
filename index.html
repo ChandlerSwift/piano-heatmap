@@ -215,6 +215,9 @@
                 date: Date.now(),
                 notes: notes,
                 description: prompt("Description:")
+            }).then(() => {
+                notes.fill(0);
+                updateKeyboardDisplay();
             });
         });
 
