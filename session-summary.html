@@ -21,6 +21,7 @@
         <a href="all-time-stats.html">All-time stats</a>
     </div>
     <template id="keyboard">
+        <div class="title"></div>
         <svg version="1.1" baseProfile="full" width="1300" height="100" xmlns="http://www.w3.org/2000/svg">
             <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-21" data-note-name="a-0" width="25" height="100" x="0" y="0" />
             <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" class="key-23" data-note-name="b-0" width="25" height="100" x="25" y="0" />
@@ -150,7 +151,7 @@
             if (session.description != "") {
                 title += ": " + session.description;
             }
-            keyboard.prepend(title);
+            keyboard.querySelector(".title").innerHTML = title;
             let notes = new Array(109).fill(0);
             let max_count = 0;
             for (let i = 0; i < 109; i++) {
