@@ -19,6 +19,7 @@
     <div class="controls">
         <a href="index.html">Home</a>
         <a href="session-summary.html">Session Summary</a>
+        <button id="export-btn">Export Data</button>
     </div>
     <svg version="1.1" baseProfile="full" width="1300" height="100" xmlns="http://www.w3.org/2000/svg">
         <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" id="key-21" data-note-name="a-0" width="25" height="100" x="0" y="0" />
@@ -167,6 +168,25 @@
             }
             document.getElementById('output').innerHTML = content;
         }
+
+        document.getElementById("export-btn").addEventListener("click", async function(){
+            // https://javascript.info/blob#blob-as-url
+            let link = document.createElement('a');
+
+            var dateString = new Date(Date.now() - ((new Date).getTimezoneOffset() * 60000 ))
+                .toISOString()
+                .split("T")[0];
+            link.download = `piano-heatmap-data-${dateString}.json`;
+
+            let data = await db.sessions.toArray();
+            let blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+
+            link.href = URL.createObjectURL(blob);
+
+            link.click();
+
+            URL.revokeObjectURL(link.href);
+        });
     </script>
 </body>
 
