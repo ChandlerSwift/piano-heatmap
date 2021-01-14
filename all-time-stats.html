@@ -20,6 +20,8 @@
         <a href="index.html">Home</a>
         <a href="session-summary.html">Session Summary</a>
         <button id="export-btn">Export Data</button>
+        <button id="import-btn">Import Data</button>
+        <input type="file" id="file-input" style="display:none">
     </div>
     <svg version="1.1" baseProfile="full" width="1300" height="100" xmlns="http://www.w3.org/2000/svg">
         <rect style="fill:#ffffff;stroke:#000000;stroke-width:1;" id="key-21" data-note-name="a-0" width="25" height="100" x="0" y="0" />
@@ -124,17 +126,20 @@
         let notes = new Array(109).fill(0);
         let max_count = 0;
 
-        db.sessions.toArray().then(function(sessions){
-            for (let session of sessions) {
-                for (let i = 0; i < 109; i++) {
-                    notes[i] += session.notes[i];
-                    if (notes[i] > max_count) {
-                        max_count = notes[i];
+        function updatePage() {
+            db.sessions.toArray().then(function(sessions){
+                for (let session of sessions) {
+                    for (let i = 0; i < 109; i++) {
+                        notes[i] += session.notes[i];
+                        if (notes[i] > max_count) {
+                            max_count = notes[i];
+                        }
                     }
                 }
-            }
-            updateKeyboardDisplay();
-        });
+                updateKeyboardDisplay();
+            });
+        }
+        updatePage();
 
         function formatNoteName(name) {
             if (name.includes("flat")) {
@@ -186,6 +191,22 @@
             link.click();
 
             URL.revokeObjectURL(link.href);
+        });
+
+        document.getElementById("import-btn").addEventListener("click", function(){
+            document.getElementById("file-input").click();
+        });
+
+        document.getElementById("file-input").addEventListener("change", function(e){
+            // TODO: any error handling, don't overwrite based on IDs (probably
+            // what currently happens), add partial imports/merge imports
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                let data = JSON.parse(e.target.result);
+                db.sessions.bulkPut(data);
+                updatePage();
+            };
+            reader.readAsText(e.target.files[0]);
         });
     </script>
 </body>
