@@ -18,6 +18,7 @@
 <body>
     <div class="controls">
         <button id="save-session-btn">Save Session</button>
+        <button id="add-note-btn">+1 C4</button>
         <a href="session-summary.html">Session Summary</a>
         <a href="all-time-stats.html">All-time stats</a>
     </div>
@@ -153,6 +154,10 @@
         function midiMessageReceived(event) {
             // MIDI commands we care about. See
             // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
+
+            // Confirm before closing page
+            window.onbeforeunload = function(){ return true; }; // https://stackoverflow.com/a/1119324/3814663
+
             const NOTE_ON = 9;
             const NOTE_OFF = 8;
 
@@ -220,6 +225,12 @@
                 max_count = 1;
                 updateKeyboardDisplay();
             });
+            window.onbeforeunload = null; // We've saved; navigating away is fine
+        });
+
+        document.getElementById("add-note-btn").addEventListener("click", function() {
+            notes[60]++;
+            updateKeyboardDisplay();
         });
 
         connect();
